@@ -1,0 +1,9 @@
+# ROOT .bashrc
+# SERGIO
+force_color_prompt=yes
+
+# SERGIO LEER ALIAS DEL USUARIO SERGIO
+source /home/sergio/.bash_aliases
+
+# SERGIO ROOT PROMPT 2025-11-02
+PS1='\[\e[91m\]\u\[\e[0m\]@\[\e[38;5;190m\]\h\[\e[0m\]:\[\e[30;48;5;68m\]\w\[\e[0m\]\$ '
