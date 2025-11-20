@@ -1,5 +1,5 @@
 # Fedora-Bash-configuration-y-aliases
-Bash conf para Fedora 42/43
+## Bash conf para Fedora 42/43
 
 Primero, crear el directorio donde se almacenará el archivo bash_aliases
 
