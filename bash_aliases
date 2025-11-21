@@ -82,6 +82,30 @@ alias apachelog='sudo apachelogFun'
 # SERGIO 2025-11-02
 # https://github.com/ChrisTitusTech/mybash/blob/main/.bashrc
 
+alias web='cd /var/www/html'
+
+# Edit this .bashrc file
+alias ebrc='nano ~/.bashrc'
+
+# Reload .bashrc file
+alias reloadbrc='source ~/.bashrc'
+
+
+# Edit this .bashrc.d/bash_aliases
+alias ealias='nano ~/.bashrc.d/bash_aliases'
+alias ealias2='subl ~/.bashrc.d/bash_aliases'
+
+
+# alias to show the date
+alias hoy='date "+%Y-%m-%d %A %T %Z"'
+
+
+# alias to upgrade fedora
+alias fupdate='sudo dnf update'
+alias fkupdate='flatpak update'
+
+
+
 alias spico='sudo pico'
 alias snano='sudo nano'
 alias vim='nvim'  
@@ -105,7 +129,6 @@ alias lx='ls -lXBh'
 alias lk='ls -lSrh'               # sort by size
 alias lt='ls -ltrh'               # sort by date
 
-alias ebrc='edit ~/.bashrc'
 alias ping10='ping -c 10'
 alias cls='clear'
 alias cat='ccat'
@@ -118,6 +141,14 @@ alias svi='sudo nvim'
 alias home='cd ~'
 alias cd..='cd ..'
 
+# Remove a directory and all files
+alias rmd='/bin/rm  --recursive --force --verbose '
+
+
+# Search command line history
+alias his="history | grep "
+
+
 alias grep='grep --color'
 
 alias topcpu="/bin/ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10"
@@ -129,3 +160,69 @@ alias mkgz='tar -cvzf'
 alias untar='tar -xvf'
 alias unbz2='tar -xvjf'
 alias ungz='tar -xvzf'
+
+# Show open ports
+alias openports='netstat -nape --inet'
+
+
+
+
+# Show the current version of the operating system
+ver() {
+    local dtype
+    dtype=$(distribution)
+
+    case $dtype in
+        "redhat")
+            if [ -s /etc/redhat-release ]; then
+                cat /etc/redhat-release
+            else
+                cat /etc/issue
+            fi
+            uname -a
+            ;;
+        "suse")
+            cat /etc/SuSE-release
+            ;;
+        "debian")
+            lsb_release -a
+            ;;
+        "gentoo")
+            cat /etc/gentoo-release
+            ;;
+        "arch")
+            cat /etc/os-release
+            ;;
+        "slackware")
+            cat /etc/slackware-version
+            ;;
+        *)
+            if [ -s /etc/issue ]; then
+                cat /etc/issue
+            else
+                echo "Error: Unknown distribution"
+                exit 1
+            fi
+            ;;
+    esac
+}
+
+
+# IP address lookup
+alias whatismyip="whatsmyip"
+function whatsmyip () {
+    # Internal IP Lookup.
+    if command -v ip &> /dev/null; then
+        echo -n "Internal IP: "
+        ip addr show wlan0 | grep "inet " | awk '{print $2}' | cut -d/ -f1
+    else
+        echo -n "Internal IP: "
+        ifconfig wlan0 | grep "inet " | awk '{print $2}'
+    fi
+
+    # External IP Lookup
+    echo -n "External IP: "
+    curl -4 ifconfig.me
+}
+
+
