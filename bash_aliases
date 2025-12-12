@@ -165,7 +165,72 @@ alias ungz='tar -xvzf'
 alias openports='netstat -nape --inet'
 
 
+# Show the current distribution
+distribution () {
+    local dtype="unknown"  # Default to unknown
 
+    # Use /etc/os-release for modern distro identification
+    if [ -r /etc/os-release ]; then
+        source /etc/os-release
+        case $ID in
+            fedora|rhel|centos)
+                dtype="redhat"
+                ;;
+            sles|opensuse*)
+                dtype="suse"
+                ;;
+            ubuntu|debian)
+                dtype="debian"
+                ;;
+            gentoo)
+                dtype="gentoo"
+                ;;
+            arch|manjaro)
+                dtype="arch"
+                ;;
+            slackware)
+                dtype="slackware"
+                ;;
+            *)
+                # Check ID_LIKE only if dtype is still unknown
+                if [ -n "$ID_LIKE" ]; then
+                    case $ID_LIKE in
+                        *fedora*|*rhel*|*centos*)
+                            dtype="redhat"
+                            ;;
+                        *sles*|*opensuse*)
+                            dtype="suse"
+                            ;;
+                        *ubuntu*|*debian*)
+                            dtype="debian"
+                            ;;
+                        *gentoo*)
+                            dtype="gentoo"
+                            ;;
+                        *arch*)
+                            dtype="arch"
+                            ;;
+                        *slackware*)
+                            dtype="slackware"
+                            ;;
+                    esac
+                fi
+
+                # If ID or ID_LIKE is not recognized, keep dtype as unknown
+                ;;
+        esac
+    fi
+
+    echo $dtype
+}
+
+
+DISTRIBUTION=$(distribution)
+if [ "$DISTRIBUTION" = "redhat" ] || [ "$DISTRIBUTION" = "arch" ]; then
+      alias cat='bat'
+else
+      alias cat='batcat'
+fi 
 
 # Show the current version of the operating system
 ver() {
