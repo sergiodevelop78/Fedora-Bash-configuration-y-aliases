@@ -108,7 +108,7 @@ alias fkupdate='flatpak update'
 
 alias spico='sudo pico'
 alias snano='sudo nano'
-alias vim='nvim'  
+alias vim='nvim'
 
 
 alias cp='cp -i'
@@ -165,72 +165,7 @@ alias ungz='tar -xvzf'
 alias openports='netstat -nape --inet'
 
 
-# Show the current distribution
-distribution () {
-    local dtype="unknown"  # Default to unknown
 
-    # Use /etc/os-release for modern distro identification
-    if [ -r /etc/os-release ]; then
-        source /etc/os-release
-        case $ID in
-            fedora|rhel|centos)
-                dtype="redhat"
-                ;;
-            sles|opensuse*)
-                dtype="suse"
-                ;;
-            ubuntu|debian)
-                dtype="debian"
-                ;;
-            gentoo)
-                dtype="gentoo"
-                ;;
-            arch|manjaro)
-                dtype="arch"
-                ;;
-            slackware)
-                dtype="slackware"
-                ;;
-            *)
-                # Check ID_LIKE only if dtype is still unknown
-                if [ -n "$ID_LIKE" ]; then
-                    case $ID_LIKE in
-                        *fedora*|*rhel*|*centos*)
-                            dtype="redhat"
-                            ;;
-                        *sles*|*opensuse*)
-                            dtype="suse"
-                            ;;
-                        *ubuntu*|*debian*)
-                            dtype="debian"
-                            ;;
-                        *gentoo*)
-                            dtype="gentoo"
-                            ;;
-                        *arch*)
-                            dtype="arch"
-                            ;;
-                        *slackware*)
-                            dtype="slackware"
-                            ;;
-                    esac
-                fi
-
-                # If ID or ID_LIKE is not recognized, keep dtype as unknown
-                ;;
-        esac
-    fi
-
-    echo $dtype
-}
-
-
-DISTRIBUTION=$(distribution)
-if [ "$DISTRIBUTION" = "redhat" ] || [ "$DISTRIBUTION" = "arch" ]; then
-      alias cat='bat'
-else
-      alias cat='batcat'
-fi 
 
 # Show the current version of the operating system
 ver() {
@@ -290,4 +225,42 @@ function whatsmyip () {
     curl -4 ifconfig.me
 }
 
+# CONECTAR A SERVIDOR SERGIO DO1
+function sergiodo1() {
+	ssh sergio@sergiodo1 -p 7022
+}
 
+# CONECTAR A RASPBERRY PI ZERO 2W
+function sergiopizero2w1() {
+       	ssh pi@192.168.3.222
+}
+
+# CONECTAR A RASPBERRY PI 3B
+function sergiopi3b1() {
+        ssh pi@192.168.3.221
+}
+
+# CONECTAR A RASPBERRY PI 4B 1
+function sergiopi4b1() {
+        ssh pi@192.168.3.223
+}
+
+# CONECTAR A SERVIDOR SERGIO DO_BC
+function sergiodobc() {
+       	ssh sergio@sergiodobc -p 7422
+}
+
+# Release y Renew IP
+function renewIp() {
+	sudo nmcli con down id 'USB_Lan'
+	sudo nmcli con up id 'USB_Lan'
+}
+
+
+
+alias macInvertida='~/getClaveONT.sh'
+
+alias editarrc='nano .bashrc.d/bash_aliases'
+alias suspenderPC='systemctl suspend'
+alias verAlias='cat ~/.bashrc.d/bash_aliases'
+alias veralias='cat ~/.bashrc.d/bash_aliases'
